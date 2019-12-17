@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户管理-资料修改</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+</head>
+<body>
+<form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
+    <input id="hiddenSex" name="hiddenSex" type = "hidden" th:value = "${oldUser.userSex}"/>
+    <h4 style="text-align:center; margin-bottom: 20px">用户管理-资料修改</h4>
+    <div class="form-group">
+        <div class="row">
+            <label class="form-label col-md-4">用户名: </label>
+            <label class="form-label col-md-4" th:text = "${oldUser.userName}"></label>
+            <input id="userName" name="userName" type="hidden" class="form-control"  th:value="${oldUser.userName}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="form-label col-md-4">性别: </label>
+            <input id="man" name="userSex"  type = "radio" value = "0"/>男
+            <input id="woman" name="userSex" type = "radio" value = "1"/>女
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="form-label col-md-4">电话号码:</label>
+            <div class="col-md-5">
+                <input id="telephone" name="telephone" class="form-control"  th:value="${oldUser.telephone}"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="form-label col-md-4">生日:</label>
+            <div class="col-md-5">
+                <input id="birthday" name="birthday" class="form-control"  placeholder="yyyy-MM-dd"  th:value="${#dates.format(oldUser.birthday, 'yyyy-MM-dd')}"/>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <button class="btn btn-primary btn-block" type="button"  onclick= "updateUser()">确定修改</button>
+        </div>
+        <div class="col-md-5">
+            <button class="btn btn-primary btn-block"  type="button" onclick="javascript:history.back(-1);">返回</button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    $(function(){
+        var sex = $("#hiddenSex").val();
+        if (sex == 0) {
+            $("#man").attr("checked",true);
+        }else{
+            $("#woman").attr("checked",true);
+        }
+    });
+    function updateUser(){
+        var userSex = $("input[name='userSex']:checked").val();
+        var telephone = $("#telephone").val();
+        var birthday = $("#birthday").val();
+        var userName = $("#userName").val();
+        var confirm = window.confirm("确定修改资料吗");
+        if (confirm == false) {
+            return;
+        }
+        $.ajax({
+            url: "/userManager/updateUser",
+            type: "POST",
+            data:{
+                userSex:userSex,
+                telephone:telephone,
+                birthday:birthday,
+                userName:userName
+            },
+            success:function(data){
+                if (data.code == 0) {
+                    alert("更新成功");
+                    window.location.href = "/user/toUserManager";
+                }else{
+                    layer.alert(data.msg);
+                }
+            },
+            error:function(){
+                alert("更新失败,客户端请求错误");
+            }
+        });
+    }
+</script>
+</html>

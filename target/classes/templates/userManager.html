@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    
+</head>
+<body>
+
+<form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
+
+	<div class = "panel panel-default">
+		<input id="selectTip" name="selectTip" class="form-control" placeholder="根据用户姓名查询" />
+		<button class="btn btn-primary btn-block" type="button"  th:onclick="select()">查询</button>
+		<div class = "panel-heading">用户信息列表</div>
+		<table class = "table" id = "userList">
+			<th>
+			<td>姓名</td>
+			<td>性别</td>
+			<td>电话号码</td>
+			<td>生日</td>
+			<td>注册时间</td>
+			<td>角色</td>
+			<td>操作</td>
+			</th>
+			<tr th:each="user:${allUsers}">
+				<td></td>
+				<td th:text = "${user.userName}"> </td>
+				<td th:text = "${user.userSex} == 0 ? '男' : '女'"> </td>
+				<td th:text = "${user.telephone}"> </td>
+				<td th:text = "${#dates.format(user.birthday, 'yyyy-MM-dd')}"> </td>
+				<td th:text = "${#dates.format(user.registerTime, 'yyyy-MM-dd')}"> </td>
+				<td>
+					<span th:each="role:${user.roles}">
+					<span th:text = "${role.roleName}"></span>
+					</span>
+				</td>
+				<td>
+					<button class="btn btn-primary btn-block" type="button"  th:onclick="toUpdateUser([[${user.userName}]])">修改</button>
+					<button class="btn btn-primary btn-block" type="button"  th:onclick="deleteUser([[${user.userId}]])">删除</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+</body>
+<script>
+	function toUpdateUser(userName) {
+		window.location.href ="/userManager/toUpdateUser/" + userName;
+	}
+	function deleteUser(userId) {
+		$.ajax({
+			url:"/userManager/delete/"+ userId,
+			type:"GET",
+			success:function (data) {
+				if (data.code == 0) {
+					layer.alert("删除成功");
+					alert("删除成功");
+					window.location.href = "/user/toUserManager";
+				}else{
+					layer.alert(data.msg);
+				}
+			},
+			error:function () {
+				alert("删除失败,客户端请求错误");
+			}
+		});
+	}
+	function select() {
+		var selectTip = $("#selectTip").val();
+		if (selectTip == "" || selectTip.length == 0){
+			window.location.href ="/user/toUserManager";
+			return;
+		}
+		window.location.href = "/userManager/selectUserByTip/" + selectTip;
+		// $.ajax({
+		// 	url:"/user/selectUserByTip/" + selectTip,
+		// 	type:"GET",
+		// 	success:function () {
+		// 		alert("查询成功");
+		// 		//
+		// 		 window.location.href = "/user/userManager";
+		// 	},
+		// 	error:function () {
+		// 		alert("查询失败");
+		// 	}
+		// });
+	}
+</script>
+</html>
