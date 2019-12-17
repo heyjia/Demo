@@ -25,8 +25,17 @@
 <form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
 
 	<div class = "panel panel-default">
-		<input id="selectTip" name="selectTip" class="form-control" placeholder="根据用户姓名查询" />
-		<button class="btn btn-primary btn-block" type="button"  th:onclick="select()">查询</button>
+		<table>
+			<th>
+				<td><input id="selectTip" name="selectTip" class="form-control" placeholder="根据用户姓名查询" /></td>
+				<td><button class="btn btn-primary btn-block" type="button"  onclick="select()">查询</button></td>
+				<td><button class="btn btn-primary btn-block" type="button"  onclick="clearTip()">清空</button></td>
+			</th>
+			<th>
+				<button class="btn btn-primary btn-block" type="button"  onclick="toAddUser()">添加用户</button>
+			</th>
+		</table>
+		</table>
 		<div class = "panel-heading">用户信息列表</div>
 		<table class = "table" id = "userList">
 			<th>
@@ -60,6 +69,12 @@
 </form>
 </body>
 <script>
+	function toAddUser(){
+		window.location.href ="/userManager/toAddUser";
+	}
+	function clearTip(){
+		document.getElementById('selectTip').value = "";
+	}
 	function toUpdateUser(userName) {
 		window.location.href ="/userManager/toUpdateUser/" + userName;
 	}

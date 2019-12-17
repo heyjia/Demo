@@ -6,6 +6,9 @@ import com.heihei.entity.User;
 import com.heihei.services.PrivilegeService;
 import com.heihei.services.RoleService;
 import com.heihei.services.UserService;
+import com.heihei.services.impl.PrivilegeServiceImpl;
+import com.heihei.services.impl.RoleServiceImpl;
+import com.heihei.services.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

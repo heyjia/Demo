@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>用户注册</title>
+    <title>用户管理-添加用户</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- jquery -->
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
@@ -20,7 +20,7 @@
 </head>
 <body>
 <form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
-    <h4 style="text-align:center; margin-bottom: 20px">用户注册</h4>
+    <h4 style="text-align:center; margin-bottom: 20px">用户管理-添加用户</h4>
     <div class="form-group">
             <div class="row">
                 <label class="form-label col-md-4">用户名: </label>
@@ -48,8 +48,22 @@
         <div class="form-group">
             <div class="row">
                 <label class="form-label col-md-4">性别: </label>
-                <input id="man" name="userSex"  type = "radio" value = "0"/>男
-                <input id="woman" name="userSex" type = "radio" value = "1"/>女
+                <div class="col-md-5">
+                    <input id="man" name="userSex"  type = "radio" value = "0"/>男
+                    <input id="woman" name="userSex" type = "radio" value = "1"/>女
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="form-label col-md-4">权限: </label>
+                <div class="col-md-5">
+                    <select id = "roleId">
+                        <option value="1">admin</option>
+                        <option value="2">Guest</option>
+                        <option value="3">User</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -70,7 +84,7 @@
         </div>
         <div class="row">
             <div class="col-md-5">
-                <button class="btn btn-primary btn-block" type="button"  onclick= "register()">注册</button>
+                <button class="btn btn-primary btn-block" type="button"  onclick= "register()">确定添加</button>
             </div>
             <div class="col-md-5">
                 <button class="btn btn-primary btn-block"  type="button" onclick="javascript:history.back(-1);">返回</button>
@@ -80,12 +94,12 @@
 </body>
 <script>
     function register() {
-        var roleId = 3;
+        var roleId = $("#roleId").val();
         var userName = $("#userName").val();
-        var newPassword = $("#newPassword").val()
+        var newPassword = $("#newPassword").val();
         var confirmPassword = $("#confirmPassword").val();
         var sex = $("input[name='userSex']:checked").val();
-        var telephone = $("#telephone").val()
+        var telephone = $("#telephone").val();
         var birthday = $("#birthday").val();
         if (userName == undefined || userName == "" || userName == null) {
             alert("用户名不可以为空");
@@ -111,7 +125,7 @@
             url: "/login/register",
             type: "POST",
             data: {
-                roleId: roleId,
+                roleId:roleId,
                 userName: userName,
                 newPassword: newPassword,
                 sex: sex,
@@ -121,11 +135,10 @@
             success: function (data) {
                 if (data.code == 0) {
                     alert("注册成功");
-                    window.location.href = "/login/to_login";
+                    window.location.href = "/user/toUserManager";
                 }else{
                     alert(data.msg);
                 }
-
             },
             error: function () {
                 alert("客户端请求异常");

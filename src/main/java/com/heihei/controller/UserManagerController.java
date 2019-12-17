@@ -5,6 +5,7 @@ import com.heihei.entity.UserAndRole;
 import com.heihei.result.CodeMsg;
 import com.heihei.result.Result;
 import com.heihei.services.UserService;
+import com.heihei.services.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,5 +95,9 @@ public class UserManagerController {
         WebContext webContext = new WebContext(request,response,request.getServletContext(),request.getLocale(),model.asMap());
         String html = thymeleafViewResolver.getTemplateEngine().process("userManager",webContext);
         return html;
+    }
+    @RequestMapping(value = "/toAddUser")
+    public String toAddUser(Model model,HttpServletRequest request, HttpServletResponse response) {
+        return "user_add";
     }
 }

@@ -7,6 +7,7 @@ package com.heihei.entity;
  * @date 2019/12/17
  */
 public class RegisterUserForm {
+    private int roleId;
     private String userName;
     private String newPassword;
     private int sex;
@@ -16,62 +17,60 @@ public class RegisterUserForm {
     public RegisterUserForm() {
     }
 
-    public RegisterUserForm(String userName, String newPassword, int sex, String telephone, String birthday) {
+    public RegisterUserForm(int roleId, String userName, String newPassword, int sex, String telephone, String birthday) {
+        this.roleId = roleId;
         this.userName = userName;
         this.newPassword = newPassword;
         this.sex = sex;
         this.telephone = telephone;
         this.birthday = birthday;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
     }
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
 
+    public int getSex() {
+        return sex;
+    }
+
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public String getTelephone() {
+        return telephone;
     }
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public String getBirthday() {
+        return birthday;
     }
 
-    @Override
-    public String toString() {
-        return "RegisterUserForm{" +
-                "userName='" + userName + '\'' +
-                ", newPassword='" + newPassword + '\'' +
-                ", sex=" + sex +
-                ", telephone='" + telephone + '\'' +
-                ", birthday='" + birthday + '\'' +
-                '}';
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }

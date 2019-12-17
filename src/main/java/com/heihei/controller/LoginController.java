@@ -5,6 +5,7 @@ import com.heihei.entity.User;
 import com.heihei.result.CodeMsg;
 import com.heihei.result.Result;
 import com.heihei.services.UserService;
+import com.heihei.services.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -118,7 +119,7 @@ public class LoginController {
             logger.info("用户已存在");
             return Result.error(CodeMsg.USER_EXISTED);
         }
-        boolean addUserResult =  userService.addUser(user);    //添加用户
+        boolean addUserResult =  userService.addUser(user,registerUserForm.getRoleId());    //添加用户
         if (addUserResult == false) {
             return Result.error(CodeMsg.REGISTER_ERROR);
         }else{

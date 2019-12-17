@@ -5,6 +5,7 @@ import com.heihei.entity.UserAndRole;
 import com.heihei.result.CodeMsg;
 import com.heihei.result.Result;
 import com.heihei.services.UserService;
+import com.heihei.services.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
