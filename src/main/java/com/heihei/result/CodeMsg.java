@@ -23,6 +23,8 @@ public class CodeMsg {
     //用户管理
     public static CodeMsg DELETEUSER_ERROR = new CodeMsg(30001,"删除用户失败");
     public static CodeMsg UPDATEUSER_ERROR = new CodeMsg(30002,"更改用户资料失败");
+    //通用
+    public static CodeMsg BIRTHDAY_ERROR = new CodeMsg(40001,"生日格式错误");;
     public CodeMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;

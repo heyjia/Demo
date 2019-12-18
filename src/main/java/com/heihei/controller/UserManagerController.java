@@ -73,7 +73,12 @@ public class UserManagerController {
         user.setTelephone(telephone);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         if(birthday != null && birthday.length() > 0) {
-            Date date = formatter.parse(birthday);
+            Date date = null;
+            try{
+                date = formatter.parse(birthday);
+            }catch (Exception e) {
+                return Result.error(CodeMsg.BIRTHDAY_ERROR);
+            }
             user.setBirthday(date);
         }
         boolean result  = userService.updateUser(user);

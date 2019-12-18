@@ -123,12 +123,12 @@
                     alert("注册成功");
                     window.location.href = "/login/to_login";
                 }else{
-                    alert(data.msg);
+                    layer.msg(data.msg);
                 }
 
             },
             error: function () {
-                alert("客户端请求异常");
+                layer.alert("客户端请求异常");
             }
         });
     }

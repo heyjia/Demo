@@ -5,7 +5,6 @@ import com.heihei.entity.User;
 import com.heihei.result.CodeMsg;
 import com.heihei.result.Result;
 import com.heihei.services.UserService;
-import com.heihei.services.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -110,7 +109,12 @@ public class LoginController {
         user.setUserSex(registerUserForm.getSex());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         if (registerUserForm.getBirthday() != null && registerUserForm.getBirthday().length() > 0) {
-            Date date = formatter.parse(registerUserForm.getBirthday());
+            Date date = null;
+            try{
+                date = formatter.parse(registerUserForm.getBirthday());
+            }catch (Exception e) {
+                return Result.error(CodeMsg.BIRTHDAY_ERROR);
+            }
             user.setBirthday(date);
         }
         user.setRegisterTime(new Date());

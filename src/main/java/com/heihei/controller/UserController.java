@@ -63,7 +63,12 @@ public class UserController {
         //将生日的String转换成yyyy-MM-dd格式
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         if(birthday != null && birthday.length() > 0) {
-            Date date = formatter.parse(birthday);
+            Date date = null;
+            try{
+                 date = formatter.parse(birthday);
+            }catch (Exception e) {
+                return Result.error(CodeMsg.BIRTHDAY_ERROR);
+            }
             user.setBirthday(date);
         }
         Boolean result = userService.updateUser(user);      //更新用户
